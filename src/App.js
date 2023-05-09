@@ -4,11 +4,15 @@ import React from 'react';
 
 function App() {
   return (
-    <div >
-      <h1>My React App</h1>
-      <Link to="/">Home</Link> <br></br>
-      <Link to='/profile'>Profile</Link>
-    </div>
+    <div className='mainApp'>
+        <h1>React App</h1>
+          <ul >
+              <li ><a><Link to="/">Home</Link></a></li>
+              <li ><a><Link to="/profile">Profile</Link></a></li>
+              <br/>
+              <br/>
+          </ul>
+      </div>
   );
 }
 
