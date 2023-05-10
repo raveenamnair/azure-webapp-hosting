@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import axios from "axios";
 
 const Profile = () => {
 
-     URL = 'https://may-fhl-azure-app.azurewebsites.net/api/get-users?code=FYFHgVR5f5XpqbNKNgaWEvOQChJQ9yUxZobRcqcr6B6GAzFuTPUunA=='
+     let URL = 'https://may-fhl-azure-app.azurewebsites.net/api/get-users?code=FYFHgVR5f5XpqbNKNgaWEvOQChJQ9yUxZobRcqcr6B6GAzFuTPUunA=='
 
      let [name, setName] = useState("") 
      let [data, setData] = useState([])
