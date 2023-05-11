@@ -2,36 +2,39 @@ import React, {useState} from "react";
 import axios from "axios";
 
 const Profile = () => {
+    const username = sessionStorage.getItem('username')
 
-     let URL = 'https://may-fhl-azure-app.azurewebsites.net/api/get-users?code=FYFHgVR5f5XpqbNKNgaWEvOQChJQ9yUxZobRcqcr6B6GAzFuTPUunA=='
 
-     let [name, setName] = useState("") 
      let [data, setData] = useState([])
+     var [loading, setLoading] = useState(true)
 
-     const getUser = () => {
-        axios.get(URL)
-        .then(response => {
-            //setName(response.data)
-            setData(response.data)
-            console.log(response)
-            // To get the first entry do [0] and then the fields of the document 
-            // This works lmao
-            console.log(data[0].name)
-            setName(data[0].name)
-        })
-        .catch(error => console.error(`Error: ${error}`));
-        
-        console.log("hi " + name)
 
-    }
+     React.useEffect(() => {
+        let USER_URL = `https://may-fhl-azure-app.azurewebsites.net/api/specific/${username}`
+
+        axios.get(USER_URL)
+            .then(response => {
+                //setData(JSON.stringify(response.data))
+                console.log("Data retrieved: " + JSON.stringify(response.data))
+                let data = JSON.stringify(response.data)
+                console.log(data)
+                setData(JSON.parse(data))
+                setLoading(false)
+                
+            })
+            .catch(error => console.error(`Error: ${error}`));
+    }, [username]);
+
+     
 
   
 
         return (
 
             <main>
-                <h1>We are on the Profile Page Now</h1>
-                <button onClick={getUser} type='button'>Click Me For Data</button>
+                {/* <h1>We are on the Profile Page Now</h1>
+                <button onClick={getUser} type='button'>Click Me For Data</button> */}
+                <h1>{loading ? "" : `Welcome ${data.firstName}`}</h1>
             </main>
         );
     

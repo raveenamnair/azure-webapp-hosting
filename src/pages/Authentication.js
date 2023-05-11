@@ -9,7 +9,7 @@ export default function Authentication() {
     // Variables 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    // const [data, setData] = useState([])
+    const [data, setData] = useState([])
 
     // React.useEffect(() => {
     //    getAllUsers()
@@ -35,7 +35,7 @@ export default function Authentication() {
                 let data = JSON.stringify(response.data)
                 console.log(data)
                 setData(data)
-                //console.log(data[0].name)
+                console.log(data[0].name)
             })
             
             .catch(error => console.error(`Error: ${error}`));
@@ -70,6 +70,7 @@ export default function Authentication() {
 
             <button onClick={getAllUsers}>Get All Users</button>
             <button onClick={handleLogout}>Logout</button>
+            <h2>{data.length > 0 ? data[0].username : ""}</h2>
 
             <div className="login">
                 <form onSubmit={handleLogin}>
