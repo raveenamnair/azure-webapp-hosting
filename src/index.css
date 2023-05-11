@@ -11,3 +11,39 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.login {
+  position : absolute;    
+  width    : 500px;
+  height   : 200px;
+  left     : 40%;
+  top      : 50%;
+  margin-left : -100px; /* half of the width  */
+  margin-top  : -100px; /* half of the height */
+}
+
+input[type=text], input[type=password], select {
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+   border-radius: 10px;
+   border: 1px solid gray;
+   width: 250px;
+   height: 30px;
+   padding-left: 10px;
+}
+
+input[type=number] {
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+   border-radius: 10px;
+   border: 1px solid gray;
+   height: 30px;
+   padding-left: 10px;
+}
+
+.inventory-list {
+  margin: auto;
+  width: 50%;
+  border: 3px solid green;
+  padding: 10px;
+}

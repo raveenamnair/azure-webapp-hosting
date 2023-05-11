@@ -12,10 +12,13 @@ const Basic = () => {
               <NavLink to="/">Home</NavLink>
             </li>
             <li>
-              <NavLink to="/inventory">Inventory</NavLink>
+              <NavLink to="/dashboard">Dashboard</NavLink>
             </li>
             <li>
               <NavLink to="/profile">Profile</NavLink>
+            </li>
+            <li>
+              <NavLink to="/authentication">Sign Up / Login</NavLink>
             </li>
           </ul>
         </div>

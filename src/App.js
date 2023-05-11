@@ -5,18 +5,20 @@ import Navbar from './components/Navbar';
 
 import Home from './pages/Home.js';
 import Profile from './pages/Profile.js';
-import Inventory from './pages/Inventory';
+import Dashboard from './pages/Dashboard';
+import Authentication from './pages/Authentication';
 
 function App() {
   return (
     
     <Router>
-      <Navbar></Navbar>
+        <Navbar></Navbar>
       <Routes>
-      <Route exact path='/' element={<Home/>}/>     
-      <Route exact path='/profile' element={<Profile/>}/>
-      <Route exact path='/raveena' element={<Profile/>} />
-      <Route exact path='/inventory' element={<Inventory/>} />
+        <Route exact path='/' element={<Home/>}/>     
+        <Route exact path='/profile' element={<Profile/>}/>
+        <Route exact path='/raveena' element={<Profile/>} />
+        <Route exact path='/dashboard' element={<Dashboard/>} />
+        <Route exact path='/authentication' element={<Authentication/>} />
       </Routes>
     </Router>
   );
