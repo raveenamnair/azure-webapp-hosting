@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAllUsers } from "../data/api";
 import axios from "axios";
 
 
@@ -10,7 +9,7 @@ export default function Authentication() {
     // Variables 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [data, setData] = useState([])
+    // const [data, setData] = useState([])
 
     // React.useEffect(() => {
     //    getAllUsers()
@@ -70,6 +69,7 @@ export default function Authentication() {
             <h1>Authentication</h1>
 
             <button onClick={getAllUsers}>Get All Users</button>
+            <button onClick={handleLogout}>Logout</button>
 
             <div className="login">
                 <form onSubmit={handleLogin}>
