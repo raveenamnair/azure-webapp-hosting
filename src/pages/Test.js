@@ -1,5 +1,7 @@
 import React from 'react';
 import Tesseract from 'tesseract.js';
+import { isEnglishWord } from "is-english-word";
+import EditableList from '../components/EditableList';
 
 
 const Test = () => {
@@ -7,6 +9,7 @@ const Test = () => {
   const [image, setImage] = React.useState('');
   const [text, setText] = React.useState('');
   const [progress, setProgress] = React.useState(0);
+  const [parsedItems, setParsedItems] = React.useState([])
 
   const handleSubmit = () => {
     setIsLoading(true);
@@ -28,19 +31,56 @@ const Test = () => {
       });
   };
 
+  const parseText = () => {
+    const list = text.split("\n")
+    console.log("33 " + list)
+    var l = []
+    list.forEach(item => {
+        //console.log("Item: " + item)
+        const word = item.split(" ")
+        var food = ""
+        word.forEach(element => {
+            var check = isEnglishWord(element.toLowerCase())
+            if (check && element.toLowerCase().length > 2) {
+                //console.log("Checked: " + element.toLowerCase())
+                food = food + " " + element.toLowerCase() 
+            }
+        })
+        if (food.length > 0) {
+            console.log("Final: " + food)
+            l.push(food)
+        }
+    })
+    if (l.length > 0) {
+        setParsedItems(l)
+    }
+  }
+  
+  const displayEditList = () => {
+    const list = []
+    parsedItems.forEach(item => {
+        list.push(
+            <EditableList
+            itemName={item}
+            status={false}
+            />
+        )
+    })
+    return list
+  }
+
+
   return (
-    <div className="container" style={{ height: '100vh' }}>
-      <div className="row h-100">
-        <div className="col-md-5 mx-auto h-100 d-flex flex-column justify-content-center">
-          {!isLoading && (
-            <h1 className="text-center py-5 mc-5">Image To Text</h1>
-          )}
+    <div >
+      <div >
+        <div >
+          {!isLoading && (<h1>Upload An Image</h1> )}
           {isLoading && (
             <>
-              <progress className="form-control" value={progress} max="100">
+              <progress value={progress} max="100">
                 {progress}%{' '}
               </progress>{' '}
-              <p className="text-center py-0 my-0">Converting:- {progress} %</p>
+              <p>Parsing:- {progress} %</p>
             </>
           )}
           {!isLoading && !text && (
@@ -70,6 +110,17 @@ const Test = () => {
               ></textarea>
             </>
           )}
+        </div>
+      </div>
+      
+      <div>
+        <button onClick={parseText}>parse</button>
+        {/* <p>{text}</p>
+        <p>{parsedItems.toString()}</p> */}
+        <div className={parsedItems.length > 0 ? 'inventory-list' : ""}>
+            {
+                parsedItems.length > 0 ? displayEditList() : ""
+            }
         </div>
       </div>
     </div>
