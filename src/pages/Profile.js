@@ -26,17 +26,17 @@ const Profile = () => {
     }, [username]);
 
      
+    return (
+        <main>
+            {/* <h1>We are on the Profile Page Now</h1>
+            <button onClick={getUser} type='button'>Click Me For Data</button> */}
+            <h1>{loading ? "" : `Welcome ${data.firstName}`}</h1>
+            <span>{loading ? "" : `First Name: ${data.firstName}`}</span> <br></br>
+            <span>{loading ? "" : `Last Name: ${data.lastName}`}</span> <br></br>
+            <span>{loading ? "" : `Email: ${data.email}`}</span>
 
-  
-
-        return (
-
-            <main>
-                {/* <h1>We are on the Profile Page Now</h1>
-                <button onClick={getUser} type='button'>Click Me For Data</button> */}
-                <h1>{loading ? "" : `Welcome ${data.firstName}`}</h1>
-            </main>
-        );
+        </main>
+    );
     
     
 }

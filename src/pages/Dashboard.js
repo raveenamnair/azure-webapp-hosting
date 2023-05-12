@@ -58,21 +58,26 @@ export default function Dashboard() {
             const oneDay = 1000 * 60 * 60 * 24;
             const days = Math.abs(Math.round(diff / oneDay))
             console.log("Days left: " + days)
-            elements.push(
-                <InventoryList
-                itemName={item.item}
-                dateAdded={item.dateAdded}
-                expiryDate={item.expiryDate}
-                quantity={item.quantity}
-                daysLeft={days}
-                />
-            )
+            // this can be configured
+            if (days < 10) {
+                elements.push(
+                    <InventoryList
+                    itemName={item.item}
+                    dateAdded={item.dateAdded}
+                    expiryDate={item.expiryDate}
+                    quantity={item.quantity}
+                    daysLeft={days}
+                    />
+                )
+            }
+            
         });
         
-        // const myOrderedArray = elements.sort(function (a, b) {return a.daysLeft - b.daysLeft});
-        //console.log(myOrderedArray)
+        
         return elements
     }
+
+    
 
     return (
         <main>
@@ -82,16 +87,14 @@ export default function Dashboard() {
                 <button onClick={insertItem}>Add item</button>
                 <h1>{data.length === 0 ? "" : `Welcome ${data.firstName}!`  }</h1>
             </div>
-            <div>
-                <h1>Expiring Soon</h1>
-                {/* <h1>{inventory.length == 0 ? "" : inventory[0].item  }</h1> */}
-            </div>
             <div className="inventory-list">
-            {
-                loading ? '' : displayItems()
-            }  
+                <h1>Expiring Soon</h1>
+                {
+                    loading ? '' : displayItems()
+                } 
             </div>
             
+    
         </main>
     );
 }

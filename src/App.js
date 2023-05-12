@@ -7,6 +7,7 @@ import Home from './pages/Home.js';
 import Profile from './pages/Profile.js';
 import Dashboard from './pages/Dashboard';
 import Authentication from './pages/Authentication';
+import Test from './pages/Test';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route exact path='/raveena' element={<Profile/>} />
         <Route exact path='/dashboard' element={<Dashboard/>} />
         <Route exact path='/authentication' element={<Authentication/>} />
+        <Route exact path='/test' element={<Test />} />
       </Routes>
     </Router>
   );
