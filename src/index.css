@@ -43,7 +43,19 @@ input[type=number] {
 
 .inventory-list {
   margin: auto;
-  width: 50%;
-  border: 3px solid green;
+  width: 80%;
+  border: 3px solid gray;
   padding: 10px;
+}
+
+.list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 70px;
+}
+
+button {
+  margin-left: 8px;
 }

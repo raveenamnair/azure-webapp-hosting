@@ -1,8 +1,7 @@
 import React from 'react';
 import Tesseract from 'tesseract.js';
-import { isEnglishWord } from "is-english-word";
 import EditableList from '../components/EditableList';
-
+import axios from 'axios';
 
 const Test = () => {
   const [isLoading, setIsLoading] = React.useState(false);
@@ -10,6 +9,9 @@ const Test = () => {
   const [text, setText] = React.useState('');
   const [progress, setProgress] = React.useState(0);
   const [parsedItems, setParsedItems] = React.useState([])
+  const [checked, setChecked] = React.useState([])
+  const [ignored, forceUpdate] = React.useReducer(x => x + 1, 0);
+  const [newItem, setNewItem] = React.useState("")
 
   const handleSubmit = () => {
     setIsLoading(true);
@@ -31,42 +33,90 @@ const Test = () => {
       });
   };
 
-  const parseText = () => {
-    const list = text.split("\n")
-    console.log("33 " + list)
-    var l = []
-    list.forEach(item => {
-        //console.log("Item: " + item)
-        const word = item.split(" ")
-        var food = ""
-        word.forEach(element => {
-            var check = isEnglishWord(element.toLowerCase())
-            if (check && element.toLowerCase().length > 2) {
-                //console.log("Checked: " + element.toLowerCase())
-                food = food + " " + element.toLowerCase() 
-            }
-        })
-        if (food.length > 0) {
-            console.log("Final: " + food)
-            l.push(food)
-        }
-    })
-    if (l.length > 0) {
-        setParsedItems(l)
-    }
-  }
-  
   const displayEditList = () => {
     const list = []
-    parsedItems.forEach(item => {
+     parsedItems.forEach(item => {
+        
         list.push(
             <EditableList
             itemName={item}
             status={false}
+            onChangeFunc={onChangeFunc}
+        
             />
         )
     })
     return list
+  }
+
+  const onChangeFunc = (e) => {
+    if (checked.includes(e)) {
+        checked.pop(e)
+    } else {
+        checked.push(e)
+    }
+    console.log(checked)
+  }
+
+  const deleteItems = () => {
+    checked.forEach(item => {
+        parsedItems.pop(item)
+    })
+    setChecked([])
+    forceUpdate();
+    
+  }
+
+  
+
+  const sendData = () => {
+    axios.post('https://may-fhl-azure-app.azurewebsites.net/api/parse-inventory', {"name" : text})
+    .then(res => {
+        console.log(res.data)
+        setParsedItems(res.data)
+    })
+    .catch(error => {
+            console.log(error)
+    })
+  }
+
+  const showTextInput = () => {
+    return (
+        <div>
+            <br></br>
+            <hr></hr>
+            <div className='list'>
+                <p>Check the box and press delete to remove an item</p> 
+                <button onClick={deleteItems}>Delete</button>
+            </div>
+            <div className='list'>
+                <label>Add Item:
+                    <span>&nbsp;&nbsp;</span> 
+                    <input type="text"  value={newItem} onChange={(e) => setNewItem(e.target.value)} /> 
+                </label>
+                <button onClick={addItem}>Submit</button> <span>&nbsp;&nbsp;</span> 
+            </div>
+        </div>
+    ) 
+  }
+
+  const addItem = () => {
+    parsedItems.push(newItem)
+    setParsedItems(parsedItems)
+    setNewItem("")
+    forceUpdate()
+    console.log(ignored)
+  }
+
+  const sendFinalList = () => {
+    console.log(parsedItems.toString())
+    axios.post('https://may-fhl-azure-app.azurewebsites.net/api/insert-items', {'item': parsedItems.toString(), 'username': sessionStorage.getItem('username')})
+    .then(res => {
+        console.log(res.data)
+    })
+    .catch(error => {
+            console.log(error)
+    })
   }
 
 
@@ -74,7 +124,7 @@ const Test = () => {
     <div >
       <div >
         <div >
-          {!isLoading && (<h1>Upload An Image</h1> )}
+          {!isLoading && (<h1>Upload A Receipt</h1> )}
           {isLoading && (
             <>
               <progress value={progress} max="100">
@@ -96,32 +146,26 @@ const Test = () => {
                 type="button"
                 onClick={handleSubmit}
                 className="btn btn-primary mt-5"
-                value="Convert"
+                value="Parse"
               />
-            </>
-          )}
-          {!isLoading && text && (
-            <>
-              <textarea
-                className="form-control w-100 mt-5"
-                rows="30"
-                value={text}
-                onChange={(e) => setText(e.target.value)}
-              ></textarea>
             </>
           )}
         </div>
       </div>
       
       <div>
-        <button onClick={parseText}>parse</button>
-        {/* <p>{text}</p>
-        <p>{parsedItems.toString()}</p> */}
         <div className={parsedItems.length > 0 ? 'inventory-list' : ""}>
             {
-                parsedItems.length > 0 ? displayEditList() : ""
+                parsedItems.length > 0 ? displayEditList() : "After uploading, click Parse"
+            }
+            {
+                parsedItems.length > 0 ? showTextInput()  : ""
             }
         </div>
+
+        <button onClick={sendData}>{'Preview List'}</button> 
+        <button onClick={sendFinalList}>Finalize List</button>
+
       </div>
     </div>
   );
