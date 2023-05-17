@@ -9,10 +9,10 @@ const Basic = () => {
         <div className="nav-elements">
           <ul>
             <li>
-              <NavLink to="/">Home</NavLink>
+              <NavLink to="/">Dashboard</NavLink>
             </li>
             <li>
-              <NavLink to="/dashboard">Dashboard</NavLink>
+              <NavLink to="/scanning">Scan Receipt</NavLink>
             </li>
             <li>
               <NavLink to="/profile">Profile</NavLink>

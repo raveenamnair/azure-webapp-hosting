@@ -1,12 +1,15 @@
 import React, {useState} from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
     const username = sessionStorage.getItem('username')
 
-
      let [data, setData] = useState([])
      var [loading, setLoading] = useState(true)
+
+     let navigate = useNavigate();   
+
 
 
      React.useEffect(() => {
@@ -25,17 +28,29 @@ const Profile = () => {
             .catch(error => console.error(`Error: ${error}`));
     }, [username]);
 
+    const navigateToDashboard = () => {
+        navigate('/')
+    }
+
+    const navigateToScan = () => {
+        navigate('/scanning')
+    }
+
      
     return (
-        <main>
-            {/* <h1>We are on the Profile Page Now</h1>
-            <button onClick={getUser} type='button'>Click Me For Data</button> */}
-            <h1>{loading ? "" : `Welcome ${data.firstName}`}</h1>
-            <span>{loading ? "" : `First Name: ${data.firstName}`}</span> <br></br>
-            <span>{loading ? "" : `Last Name: ${data.lastName}`}</span> <br></br>
-            <span>{loading ? "" : `Email: ${data.email}`}</span>
+        <div>
+            <h1>{loading ? "" : `Profile Page`}</h1>
 
-        </main>
+            <div className="inventory-list">
+                <span><strong>{loading ? "" : "First Name: "}</strong>{loading ? "" : `${data.firstName}`}</span> <br></br>
+                <span><strong>{loading ? "" : "Last Name: "}</strong>{loading ? "" : `${data.lastName}`}</span> <br></br>
+                <span><strong>{loading ? "" : "Email: "}</strong>{loading ? "" : `${data.email}`}</span> <br></br>
+            </div>
+            <div style={{justifyItems: 'center', margin: 'auto', textAlign: 'center'}}>
+                <p style={{textAlign: 'center'}}>Want to add items? Navigate to your dashboard to see what else you want to add or directly scan a receipt.</p>
+                <button class="button-1" onClick={navigateToDashboard} >Dashboard</button> <button class="button-3" onClick={navigateToScan}>Scan Receipt</button>
+            </div>
+        </div>
     );
     
     

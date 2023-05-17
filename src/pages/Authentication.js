@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+// import axios from "axios";
 
 
 export default function Authentication() {
@@ -9,7 +9,7 @@ export default function Authentication() {
     // Variables 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [data, setData] = useState([])
+    // const [data, setData] = useState([])
 
     // React.useEffect(() => {
     //    getAllUsers()
@@ -25,25 +25,25 @@ export default function Authentication() {
 
         
     // }
-     const getAllUsers = async () => {
-        const URL = 'https://may-fhl-azure-app.azurewebsites.net/api/all-users'
+    //  const getAllUsers = async () => {
+    //     const URL = 'https://may-fhl-azure-app.azurewebsites.net/api/all-users'
     
-        await axios.get(URL)
-            .then(response => {
-                //setData(JSON.stringify(response.data))
-                console.log("Data retrieved: " + JSON.stringify(response.data))
-                let data = JSON.stringify(response.data)
-                console.log(data)
-                setData(data)
-                console.log(data[0].name)
-            })
+    //     await axios.get(URL)
+    //         .then(response => {
+    //             //setData(JSON.stringify(response.data))
+    //             console.log("Data retrieved: " + JSON.stringify(response.data))
+    //             let data = JSON.stringify(response.data)
+    //             console.log(data)
+    //             setData(data)
+    //             console.log(data[0].name)
+    //         })
             
-            .catch(error => console.error(`Error: ${error}`));
+    //         .catch(error => console.error(`Error: ${error}`));
     
-            // _callback(); 
+    //         // _callback(); 
             
             
-    }
+    // }
 
     // const getUser = async () => {
     //     console.log("30")
@@ -68,9 +68,9 @@ export default function Authentication() {
         <main>
             <h1>Authentication</h1>
 
-            <button onClick={getAllUsers}>Get All Users</button>
+            {/* <button onClick={getAllUsers}>Get All Users</button> */}
             <button onClick={handleLogout}>Logout</button>
-            <h2>{data.length > 0 ? data[0].username : ""}</h2>
+            {/* <h2>{data.length > 0 ? data[0].username : ""}</h2> */}
 
             <div className="login">
                 <form onSubmit={handleLogin}>

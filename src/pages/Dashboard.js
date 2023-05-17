@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { useState } from "react";
 import InventoryList from "../components/InventoryList";
+import { useNavigate } from "react-router-dom";
+
 
 
 export default function Dashboard() {
@@ -8,6 +10,8 @@ export default function Dashboard() {
     const [inventory, setInventory] = useState([])
     const [loading, setLoading] = useState(true)
     const username = sessionStorage.getItem('username')
+
+    let navigate = useNavigate();   
     
     React.useEffect(() => {
         const USER_URL = `https://may-fhl-azure-app.azurewebsites.net/api/specific/${username}`
@@ -46,7 +50,7 @@ export default function Dashboard() {
 
 
     const insertItem = () => {
-        
+        navigate("/scanning")
     }
 
     const displayItems = () => {
@@ -59,7 +63,7 @@ export default function Dashboard() {
             const days = Math.abs(Math.round(diff / oneDay))
             console.log("Days left: " + days)
             // this can be configured
-            if (days < 10) {
+            if (days < 20) {
                 elements.push(
                     <InventoryList
                     itemName={item.item}
@@ -82,13 +86,11 @@ export default function Dashboard() {
     return (
         <main>
             <div>
-                <h1>Dashboard</h1>
-                {/* <button onClick={handleClick}>DEUBG: Click for users</button> */}
-                <button onClick={insertItem}>Add item</button>
                 <h1>{data.length === 0 ? "" : `Welcome ${data.firstName}!`  }</h1>
+                <button class="button-56" onClick={insertItem}>Scan a Receipt</button>
             </div>
             <div className="inventory-list">
-                <h1>Expiring Soon</h1>
+                <h1 style={{textAlign: 'center'}}>Expiring Soon</h1>
                 {
                     loading ? '' : displayItems()
                 } 

@@ -30,6 +30,7 @@ const Test = () => {
         console.log(result.data);
         setText(result.data.text);
         setIsLoading(false);
+        alert("Receipt finished parsing")
       });
   };
 
@@ -113,6 +114,7 @@ const Test = () => {
     axios.post('https://may-fhl-azure-app.azurewebsites.net/api/insert-items', {'item': parsedItems.toString(), 'username': sessionStorage.getItem('username')})
     .then(res => {
         console.log(res.data)
+        alert("Items successfully added!")
     })
     .catch(error => {
             console.log(error)
@@ -123,7 +125,7 @@ const Test = () => {
   return (
     <div >
       <div >
-        <div >
+        <div className='' >
           {!isLoading && (<h1>Upload A Receipt</h1> )}
           {isLoading && (
             <>
@@ -152,19 +154,21 @@ const Test = () => {
           )}
         </div>
       </div>
-      
+      <br></br>
       <div>
-        <div className={parsedItems.length > 0 ? 'inventory-list' : ""}>
+        <div className={parsedItems.length > 0 ? 'inventory-list' : "instructions"}>
             {
-                parsedItems.length > 0 ? displayEditList() : "After uploading, click Parse"
+                parsedItems.length > 0 ? displayEditList() : "Instructions: Click on the button \"Choose File\" to scan your grocery store receipt. After uploading, click \"Parse\" button"
             }
             {
                 parsedItems.length > 0 ? showTextInput()  : ""
             }
+          
         </div>
-
-        <button onClick={sendData}>{'Preview List'}</button> 
-        <button onClick={sendFinalList}>Finalize List</button>
+        <br></br>
+          <button style={{margin: '10px'}} class="button-2"  onClick={sendData}>{'Preview List'}</button> 
+          <button class="button-2"  onClick={sendFinalList}>Finalize List</button>
+        
 
       </div>
     </div>
