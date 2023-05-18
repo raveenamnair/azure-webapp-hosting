@@ -1,59 +1,22 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-// import axios from "axios";
+import axios from "axios";
 
 
 export default function Authentication() {
     let navigate = useNavigate();   
+    const USER_URL = 'https://may-fhl-azure-app.azurewebsites.net/api/specific'
 
     // Variables 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    // const [data, setData] = useState([])
+    const [data, setData] = useState([])
 
-    // React.useEffect(() => {
-    //    getAllUsers()
-    //    setData(data)
-    //   }, []);
-
-    // const getUser =  () => {
-    //     // let username = sessionStorage.getItem('username')
-    //     console.log("calling...")
-    //     // let data = await getAllUsers()
-    //     // console.log("After function: " + data.find)
-    //    await getAllUsers().then(res => console.log("Here: " + res)).catch(err => console.log(err)); 
-
-        
-    // }
-    //  const getAllUsers = async () => {
-    //     const URL = 'https://may-fhl-azure-app.azurewebsites.net/api/all-users'
-    
-    //     await axios.get(URL)
-    //         .then(response => {
-    //             //setData(JSON.stringify(response.data))
-    //             console.log("Data retrieved: " + JSON.stringify(response.data))
-    //             let data = JSON.stringify(response.data)
-    //             console.log(data)
-    //             setData(data)
-    //             console.log(data[0].name)
-    //         })
-            
-    //         .catch(error => console.error(`Error: ${error}`));
-    
-    //         // _callback(); 
-            
-            
-    // }
-
-    // const getUser = async () => {
-    //     console.log("30")
-    //     getAllUsers().then(result => {
-    //         console.log(result);
-    //       });
-    //     //setUsername(res)
-    //     console.log("32")
-    //     console.log(username)
-    // }
+    React.useEffect(() => {
+        axios.get(`${USER_URL}/${username}`)
+             .then((response) => setData(response.data))
+             .catch((error) => console.log(error.message))
+    }, [username]);
 
     const handleLogout = () => {
         sessionStorage.removeItem("username")
@@ -61,19 +24,29 @@ export default function Authentication() {
     }
 
     const handleLogin = () => {
-        sessionStorage.setItem("username", username)
+        console.log("Your password: " + password)
+        console.log("Actual: " + data.password)
+        if (data.password !== password) {
+            alert("Incorrect username or password. Try again")
+            setUsername("")
+            setPassword("")
+        } else {
+            sessionStorage.setItem("username", username)
+            alert("Logged in successfully!")
+            navigate('/')
+        }
+    }
+
+    const handleSignUp = () => {
+        navigate('/signup')
     }
 
     return (
         <main>
             <h1>Authentication</h1>
-
-            {/* <button onClick={getAllUsers}>Get All Users</button> */}
-            <button onClick={handleLogout}>Logout</button>
-            {/* <h2>{data.length > 0 ? data[0].username : ""}</h2> */}
-
+            <button className="button-3"  onClick={handleLogout}>Sign Out</button>
             <div className="login">
-                <form onSubmit={handleLogin}>
+                <form >
                     <label>Username:
                     <span>&nbsp;&nbsp;</span> 
                         <input type="text"  value={username} onChange={(e) => setUsername(e.target.value)} /> 
@@ -84,7 +57,13 @@ export default function Authentication() {
                         <input type="password"  value={password} onChange={(e) => setPassword(e.target.value)} />
                     </label>
                 </form>
+            <br></br>
+            <br></br>
+            <button className="button-3"  onClick={handleLogin}>Login</button>
+            <p>Not registered? Just Sign up below</p>
+            <button className="button-1"  onClick={handleSignUp}>Create Account</button>
             </div>
+            
             
         </main>
     );

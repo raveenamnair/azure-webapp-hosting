@@ -9,7 +9,7 @@ export default function Dashboard() {
     const [data, setData] = useState([])
     const [inventory, setInventory] = useState([])
     const [loading, setLoading] = useState(true)
-    sessionStorage.setItem('username', 'raveenanair')
+    //sessionStorage.setItem('username', 'raveenanair')
     const username = sessionStorage.getItem('username')
     
 
@@ -94,7 +94,7 @@ export default function Dashboard() {
             <div className="inventory-list">
                 <h1 style={{textAlign: 'center'}}>Expiring Soon</h1>
                 {
-                    loading ? '' : displayItems()
+                    loading ? 'loading...' : displayItems()
                 } 
             </div>
             

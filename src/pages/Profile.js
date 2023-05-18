@@ -43,7 +43,8 @@ const Profile = () => {
 
             <div className="inventory-list">
                 <span><strong>{loading ? "" : "First Name: "}</strong>{loading ? "" : `${data.firstName}`}</span> <br></br>
-                <span><strong>{loading ? "" : "Last Name: "}</strong>{loading ? "" : `${data.lastName}`}</span> <br></br>
+                <span><strong>{loading ? "" : "Last Name: "}</strong>{loading ? "" : `${data.lastName}`}</span> <br></br><br></br>
+                <span><strong>{loading ? "" : "Username: "}</strong>{loading ? "" : `${data.username}`}</span> <br></br>
                 <span><strong>{loading ? "" : "Email: "}</strong>{loading ? "" : `${data.email}`}</span> <br></br>
             </div>
             <div style={{justifyItems: 'center', margin: 'auto', textAlign: 'center'}}>

@@ -10,7 +10,7 @@ const InventoryList = ({itemName, dateAdded, expiryDate, quantity, daysLeft}) =>
         <div >
             <span>Date Added: <span className='lightText'>{dateAdded}</span></span> <br></br>
             <span>Expiry Date: <span className='lightText'>{expiryDate}</span></span> <br></br>
-            <span><em>Quantity: <span className='lightText'>{quantity}</span></em></span><br></br>
+            {/* <span><em>Quantity: <span className='lightText'>{quantity}</span></em></span><br></br> */}
 
             <hr></hr>
         </div>
